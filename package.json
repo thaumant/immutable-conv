@@ -1,0 +1,44 @@
+{
+  "name": "immutable-conv",
+  "version": "0.1.0",
+  "description": "Serialize and restore immutable collections using conv library",
+  "main": "dist/immutable-conv.js",
+  "scripts": {
+    "build": "babel-node `which gulp`",
+    "test": "npm run build && mocha --recursive tests_compiled/",
+    "cover": "npm run build && istanbul cover _mocha -- --recursive tests_compiled/",
+    "coverall": "npm run cover && cat coverage/lcov.info | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thaumant/immutable-conv.git"
+  },
+  "keywords": [
+    "immutable",
+    "persistent",
+    "data",
+    "datastructure",
+    "functional",
+    "json",
+    "serialize",
+    "serializer",
+    "parse"
+  ],
+  "author": "Elia Schelokov <thaumant@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thaumant/immutable-conv/issues"
+  },
+  "homepage": "https://github.com/thaumant/immutable-conv",
+  "dependencies": {
+    "conv": "^0.2.0"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.0.0",
+    "gulp-mocha": "^2.0.1",
+    "immutable": "^3.7.2"
+  }
+}
