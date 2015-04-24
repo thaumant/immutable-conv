@@ -1,6 +1,6 @@
 'use strict';
 
-var conv = require('conv');
+var ImmutableConv = require('./ImmutableConv');
 var _require = require('immutable');
 
 var List = _require.List;
@@ -14,7 +14,7 @@ var Repeat = _require.Repeat;
 var Record = _require.Record;
 var Iterable = _require.Iterable;
 
-module.exports = conv.extendWith([{
+var immutableConv = new ImmutableConv([{
     'class': List,
     token: 'List',
     namespace: 'immutable',
@@ -107,3 +107,5 @@ module.exports = conv.extendWith([{
         throw new Error('Restoring an arbitrary immutable iterable is forbidden');
     }
 }]);
+
+module.exports = immutableConv.extendWith(require('conv'));

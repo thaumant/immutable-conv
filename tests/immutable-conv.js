@@ -1,10 +1,40 @@
 import {is, List, Set, OrderedSet, Stack, Map, OrderedMap, Record, Collection, Seq, Range, Repeat} from 'immutable'
 import {assert} from 'chai'
-import conv from '../dist/core.js'
+import conv from '../dist/immutable-conv'
 
-describe('core types', () => {
+describe('immutable-conv', () => {
 
-    describe('List', () => {
+    describe('converting standard types', () => {
+
+        it('does not modify strings, finite nums, objects and arrays', () => {
+            let num = 3,
+                str = 'foo',
+                obj = {foo: 14},
+                arr = [15, 92, 6]
+            assert.deepEqual(num, conv.dump(num))
+            assert.deepEqual(str, conv.dump(str))
+            assert.deepEqual(obj, conv.dump(obj))
+            assert.deepEqual(arr, conv.dump(arr))
+            assert.deepEqual(num, conv.restore(num))
+            assert.deepEqual(str, conv.restore(str))
+            assert.deepEqual(obj, conv.restore(obj))
+            assert.deepEqual(arr, conv.restore(arr))
+        })
+
+        it('dumps and restores dates and infinite numbers', () => {
+            let d = new Date('2015-04-24T16:22:54.030Z'),
+                n = -Infinity,
+                dDumped = {$Date: '2015-04-24T16:22:54.030Z'},
+                nDumped = {$Infinity: -1}
+            assert.deepEqual(nDumped, conv.dump(n))
+            assert.deepEqual(dDumped, conv.dump(d))
+            assert.deepEqual(n, conv.restore(nDumped))
+            assert.deepEqual(d, conv.restore(dDumped))
+        })
+
+    })
+
+    describe('converting List', () => {
 
         let lst = List.of(3, 14, 15),
             arr = [3, 14, 15],
@@ -20,7 +50,7 @@ describe('core types', () => {
 
     })
 
-    describe('Set', () => {
+    describe('converting Set', () => {
 
         let set = Set.of(3, 14, 15),
             arr = [3, 14, 15],
@@ -36,7 +66,7 @@ describe('core types', () => {
 
     })
 
-    describe('OrderedSet', () => {
+    describe('converting OrderedSet', () => {
 
         let set = OrderedSet.of(3, 14, 15),
             arr = [3, 14, 15],
@@ -52,7 +82,7 @@ describe('core types', () => {
 
     })
 
-    describe('Stack', () => {
+    describe('converting Stack', () => {
 
         let stack = Stack.of(3, 14, 15),
             arr = [3, 14, 15],
@@ -68,7 +98,7 @@ describe('core types', () => {
 
     })
 
-    describe('Map', () => {
+    describe('converting Map', () => {
 
         let pairs = [[3, 14], [15, 92]],
             map = Map(pairs),
@@ -84,7 +114,7 @@ describe('core types', () => {
 
     })
 
-    describe('OrderedMap', () => {
+    describe('converting OrderedMap', () => {
 
         let pairs = [[3, 14], [15, 92]],
             map = OrderedMap(pairs),
@@ -100,7 +130,7 @@ describe('core types', () => {
 
     })
 
-    describe('Record', () => {
+    describe('converting Record', () => {
 
         let Foo = Record({foo: 3})
 
@@ -116,7 +146,7 @@ describe('core types', () => {
 
     })
 
-    describe('Range', () => {
+    describe('converting Range', () => {
 
         let range1 = Range(3, 14),
             range2 = Range(92, 6, 5),
@@ -142,7 +172,7 @@ describe('core types', () => {
 
     })
 
-    describe('Repeat', () => {
+    describe('converting Repeat', () => {
 
         let repeat1 = Repeat(14, 3),
             repeat2 = Repeat(15),
@@ -168,7 +198,7 @@ describe('core types', () => {
 
     })
 
-    describe('other arbitrary iterables', () => {
+    describe('converting other arbitrary iterables', () => {
 
         it('throws an error when dumping a collection', () => {
             let test = () => conv.dump(new Collection.Indexed([3, 14, 15]))
@@ -192,7 +222,7 @@ describe('core types', () => {
         [92, {'$immutable.List': [6, 5]}]
     ]}
 
-    describe('nested structures', () => {
+    describe('converting nested structures', () => {
 
         it('dumps nested immutable structures', () => {
             assert.deepEqual(nestedDumped, conv.dump(nestedExample))
@@ -204,7 +234,7 @@ describe('core types', () => {
 
     })
 
-    describe('serialization', () => {
+    describe('serializing', () => {
 
         let serialized = JSON.stringify(nestedDumped)
 

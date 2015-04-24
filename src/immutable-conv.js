@@ -1,7 +1,8 @@
-const conv = require('conv'),
+const ImmutableConv = require('./ImmutableConv'),
     {List, Set, OrderedSet, Map, OrderedMap, Stack, Range, Repeat, Record, Iterable} = require('immutable')
 
-module.exports = conv.extendWith([
+
+const immutableConv = new ImmutableConv([
     {
         class:     List,
         token:     'List',
@@ -73,3 +74,6 @@ module.exports = conv.extendWith([
         restore:   () => { throw new Error('Restoring an arbitrary immutable iterable is forbidden') }
     }
 ])
+
+
+module.exports = immutableConv.extendWith(require('conv'))
