@@ -46,3 +46,27 @@ conv.serialize(Range(10))
 ```
 
 Serializing arbitrary Seq, Collection or Iterable classes is not supported.
+
+## Registering records
+Records are not serializeable and should be added using `#withRecord()` method.
+```javascript
+let Foo = Record({bar: null}),
+    foo = Foo({bar: 3})
+
+// This would throw [Error: Dumping unregistered record]
+// conv.serialize(foo)
+
+conv = conv.withRecord(Foo, 'Foo')
+// Method returns new converter.
+// A name (second argument) is required for unnamed records
+conv.serialize(foo) // {"$immutable.Foo": 3}
+
+
+let Baz = Record({qux: null}, 'Baz'),
+    baz = Baz({qux: 14})
+
+conv = conv.withRecord(Baz, null, 'mux')
+// name is optional for named records
+// third optional argument is a namespace
+conv.serialize(baz) // {"$mux.Baz": 14}
+```
