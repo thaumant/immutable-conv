@@ -50,4 +50,23 @@ describe('withRecord()', () => {
         
     })
 
+    describe('nested records', () => {
+        let Foo = Record({foo: 3, bar: 14}, 'Foo'),
+            Bar = Record({baz: 92, qux: 6}, 'Bar'),
+            foo = Foo({bar: Bar()}),
+            dumped = {'$immutable.Foo': {
+                foo: 3,
+                bar: {'$immutable.Bar': {baz: 92, qux: 6}}
+            }},
+            foobarConv = withRecord(withRecord(conv, Foo), Bar)
+
+        it('dumps nested records', () => {
+            assert.deepEqual(dumped, foobarConv.dump(foo))
+        })
+
+        it('dumps nested records', () => {
+            assert(is(foo, foobarConv.restore(dumped)))
+        })
+    })
+
 })
