@@ -26,6 +26,12 @@ describe('withRecord()', () => {
             assert(is(foo, fooConv.restore(fooDumped)))
         })
 
+        it('overrides name for named record', () => {
+            let fooConv2 = withRecord(conv, Foo, 'Bar'),
+                dumped2 = {'$immutable.Bar': {foo: 3}}
+            assert.deepEqual(dumped2, fooConv2.dump(foo))
+        })
+
     })
 
     describe('result when calling without name parameter', () => {
@@ -46,6 +52,12 @@ describe('withRecord()', () => {
 
         it('restores dumped record', () => {
             assert(is(bar, barConv.restore(barDumped)))
+        })
+
+        it('throws an error if given record has no name', () => {
+            let Foo = Record({foo: 3}),
+                test = () => withRecord(conv, Foo)
+            assert.throw(test, 'Named record or name parameter required')
         })
         
     })
