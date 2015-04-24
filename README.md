@@ -70,3 +70,6 @@ conv = conv.withRecord(Baz, null, 'mux')
 // third optional argument is a namespace
 conv.serialize(baz) // {"$mux.Baz": 14}
 ```
+
+## Documentation
+Immutable-conv is based on [conv](https://github.com/thaumant/immutable). See the conv readme for basic api and examples.
