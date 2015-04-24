@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/thaumant/immutable-conv",
   "dependencies": {
-    "conv": "^0.2.0"
+    "conv": "^0.4.1"
   },
   "devDependencies": {
     "chai": "^2.2.0",
