@@ -1,5 +1,5 @@
 const conv = require('conv'),
-    {List, Set, OrderedSet, Map, OrderedMap, Stack, Record} = require('immutable')
+    {List, Set, OrderedSet, Map, OrderedMap, Stack, Record, Iterable} = require('immutable')
 
 module.exports = conv.extendWith([
     {
@@ -52,10 +52,10 @@ module.exports = conv.extendWith([
         restore:   () => { throw new Error('Restoring unregistered record') }
     },
     {
-        class:     Seq,
-        token:     'Seq',
+        class:     Iterable,
+        token:     'Iterable',
         namespace: 'immutable',
-        dump:      () => { throw new Error('Dumping Seq is forbidden, use conv.withSeqs()') },
-        restore:   () => { throw new Error('Restoring Seq is forbidden, use conv.withSeqs()') }
+        dump:      () => { throw new Error('Dumping an arbitrary immutable iterable is forbidden') },
+        restore:   () => { throw new Error('Restoring an arbitrary immutable iterable is forbidden') }
     }
 ])

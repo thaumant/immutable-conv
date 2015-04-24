@@ -1,8 +1,8 @@
-import {is, List, Set, OrderedSet, Stack, Map, OrderedMap, Record, Seq} from 'immutable'
+import {is, List, Set, OrderedSet, Stack, Map, OrderedMap, Record, Collection, Seq, Range} from 'immutable'
 import {assert} from 'chai'
 import conv from '../dist/core.js'
 
-describe('core', () => {
+describe('core types', () => {
 
     describe('List', () => {
 
@@ -112,6 +112,20 @@ describe('core', () => {
         it('throws an error when restoring', () => {
             let test = () => conv.restore({'$immutable.Record': {foo: 3}})
             assert.throw(test, 'Restoring unregistered record')
+        })
+
+    })
+
+    describe('other arbitrary iterables', () => {
+
+        it('throws an error when dumping a collection', () => {
+            let test = () => conv.dump(new Collection.Indexed([3, 14, 15]))
+            assert.throw(test, 'Dumping an arbitrary immutable iterable is forbidden')
+        })
+
+        it('throws an error when dumping a sequence', () => {
+            let test = () => conv.dump(new Seq.Indexed([3, 14, 15]))
+            assert.throw(test, 'Dumping an arbitrary immutable iterable is forbidden')
         })
 
     })
