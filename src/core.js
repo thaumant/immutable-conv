@@ -7,48 +7,48 @@ module.exports = conv.extendWith([
         token:     'List',
         namespace: 'immutable',
         dump:      'toArray',
-        restore:   (arr) => List(arr)
+        restore:   (arr) => new List(arr)
     },
     {
         class:     Set,
         token:     'Set',
         namespace: 'immutable',
         dump:      'toArray',
-        restore:   (arr) => Set(arr)
+        restore:   (arr) => new Set(arr)
     },
     {
         class:     OrderedSet,
         token:     'OrderedSet',
         namespace: 'immutable',
         dump:      'toArray',
-        restore:   (arr) => OrderedSet(arr)
+        restore:   (arr) => new OrderedSet(arr)
     },
     {
         class:     Stack,
         token:     'Stack',
         namespace: 'immutable',
         dump:      'toArray',
-        restore:   (arr) => Stack(arr)
+        restore:   (arr) => new Stack(arr)
     },
     {
         class:     Map,
         token:     'Map',
         namespace: 'immutable',
         dump:      (map) => map.entrySeq().toArray(),
-        restore:   (pairs) => Map(pairs)
+        restore:   (pairs) => new Map(pairs)
     },
     {
         class:     OrderedMap,
         token:     'OrderedMap',
         namespace: 'immutable',
         dump:      (map) => map.entrySeq().toArray(),
-        restore:   (pairs) => OrderedMap(pairs)
+        restore:   (pairs) => new OrderedMap(pairs)
     },
     {
         token:     'Range',
         namespace: 'immutable',
         class:     Range,
-        dump:      (r)  => [r._start, r._end, r._step],
+        dump:      (r) => [r._start, r._end, r._step],
         restore:   (d) => new Range(d[0], d[1], d[2])
     },
     {
