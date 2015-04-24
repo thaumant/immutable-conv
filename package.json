@@ -1,6 +1,6 @@
 {
   "name": "immutable-conv",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Serialize and restore immutable collections using conv library",
   "main": "dist/immutable-conv.js",
   "scripts": {
