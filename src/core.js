@@ -1,5 +1,5 @@
 const conv = require('conv'),
-    {List, Set, OrderedSet, Map, OrderedMap, Stack, Record, Iterable} = require('immutable')
+    {List, Set, OrderedSet, Map, OrderedMap, Stack, Range, Repeat, Record, Iterable} = require('immutable')
 
 module.exports = conv.extendWith([
     {
@@ -43,6 +43,20 @@ module.exports = conv.extendWith([
         namespace: 'immutable',
         dump:      (map) => map.entrySeq().toArray(),
         restore:   (pairs) => OrderedMap(pairs)
+    },
+    {
+        token:     'Range',
+        namespace: 'immutable',
+        class:     Range,
+        dump:      (r)  => [r._start, r._end, r._step],
+        restore:   (d) => new Range(d[0], d[1], d[2])
+    },
+    {
+        token:     'Repeat',
+        namespace: 'immutable',
+        class:     Repeat,
+        dump:      (r) => [r._value, r.size],
+        restore:   (dumped) => new Repeat(dumped[0], dumped[1])
     },
     {
         class:     Record,
